@@ -786,14 +786,14 @@
         return normalize(joined);
       };
     })
-    .factory('satellizer.storage', ['satellizer.config', function(config) {
+    .factory('satellizer.storage', ['satellizer.config', 'localStorageService', function(config, localStorageService) {
       switch (config.storage) {
         case 'localStorage':
           if ('localStorage' in window && window['localStorage'] !== null) {
             return {
-              get: function(key) { return localStorage.getItem(key); },
-              set: function(key, value) { return localStorage.setItem(key, value); },
-              remove: function(key) { return localStorage.removeItem(key); }
+              get: function(key) { return localStorageService.get(key); },
+              set: function(key, value) { localStorageService.set(key, value); },
+              remove: function(key) { return localStorageService.remove(key); }
             };
           } else {
             console.warn('Warning: Local Storage is disabled or unavailable. Satellizer will not work correctly.');
